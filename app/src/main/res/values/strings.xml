@@ -4,4 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tab_notification">News</string>
+    <string name="tab_feed">Feed</string>
+    <string name="tab_running">Run</string>b
+    <string name="tab_account">Account</string>
 </resources>
