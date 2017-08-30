@@ -24,15 +24,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+//
+//        NavigationAdapter adapter = new NavigationAdapter(this, getSupportFragmentManager());
+//
+//        viewPager.setAdapter(adapter);
 
-        NavigationAdapter adapter = new NavigationAdapter(this, getSupportFragmentManager());
-
-        viewPager.setAdapter(adapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        tabLayout.setupWithViewPager(viewPager);
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+//
+//        tabLayout.setupWithViewPager(viewPager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
