@@ -21,31 +21,31 @@ public class NavigationAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new FeedFragment();
-        } else if (position == 1){
             return new JoggingFragment();
-        }else if (position == 2){
-            return new AccountFragment();
+//        } else if (position == 1){
+//            return new JoggingFragment();
+//        }else if (position == 2){
+//            return new AccountFragment();
         }else {
-            return new NotificationsFragment();
+            return new AccountFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return mContext.getString(R.string.tab_feed);
-        } else if (position == 1) {
             return mContext.getString(R.string.tab_running);
-        } else if (position == 2) {
-            return mContext.getString(R.string.tab_account);
+//        } else if (position == 1) {
+//            return mContext.getString(R.string.tab_running);
+//        } else if (position == 2) {
+//            return mContext.getString(R.string.tab_account);
         } else {
-            return mContext.getString(R.string.tab_notification);
+            return mContext.getString(R.string.tab_account);
         }
     }
 }
