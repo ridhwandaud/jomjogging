@@ -13,9 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class NavigationAdapter extends FragmentPagerAdapter {
     private Context mContext;
 
-    public NavigationAdapter(Context context,FragmentManager fm) {
+    public NavigationAdapter(FragmentManager fm) {
         super(fm);
-        mContext = context;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class NavigationAdapter extends FragmentPagerAdapter {
 //        }else if (position == 2){
 //            return new AccountFragment();
         }else {
-            return new AccountFragment();
+            return new NotificationsFragment();
         }
     }
 
@@ -39,13 +38,13 @@ public class NavigationAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return mContext.getString(R.string.tab_running);
+            return "Run";
 //        } else if (position == 1) {
 //            return mContext.getString(R.string.tab_running);
 //        } else if (position == 2) {
 //            return mContext.getString(R.string.tab_account);
         } else {
-            return mContext.getString(R.string.tab_account);
+            return "Notifications";
         }
     }
 }

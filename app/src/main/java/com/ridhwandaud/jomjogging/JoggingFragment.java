@@ -2,7 +2,9 @@ package com.ridhwandaud.jomjogging;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +24,11 @@ public class JoggingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText("Training");
-        return textView;
+
+        View rootView = inflater.inflate(R.layout.jogging_fragment, container, false);
+
+        return rootView;
+
     }
 
 }

@@ -22,9 +22,10 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText("Account");
-        return textView;
+
+        View rootView = inflater.inflate(R.layout.account_fragment, container, false);
+
+        return rootView;
     }
 
 }
