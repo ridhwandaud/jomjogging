@@ -3,6 +3,7 @@ package com.ridhwandaud.jomjogging;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FragmentTransaction defaultView = getSupportFragmentManager().beginTransaction();
+        defaultView.replace(R.id.fl, new JoggingFragment());
+        defaultView.commit();
+
 //        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 //
 //        NavigationAdapter adapter = new NavigationAdapter(this, getSupportFragmentManager());
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         // Setup drawer view
         setupDrawerContent(navigationView);
