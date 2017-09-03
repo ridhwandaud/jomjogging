@@ -11,10 +11,10 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class JoggingFragment extends Fragment {
+public class SettingFragment extends Fragment {
 
 
-    public JoggingFragment() {
+    public SettingFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +23,7 @@ public class JoggingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView textView = new TextView(getActivity());
-        textView.setText("Training");
+        textView.setText("Setting");
         return textView;
     }
 
