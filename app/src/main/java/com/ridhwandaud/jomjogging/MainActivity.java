@@ -33,16 +33,6 @@ public class MainActivity extends AppCompatActivity {
         defaultView.replace(R.id.fl, new JoggingFragment());
         defaultView.commit();
 
-//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-//
-//        NavigationAdapter adapter = new NavigationAdapter(this, getSupportFragmentManager());
-//
-//        viewPager.setAdapter(adapter);
-//
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//
-//        tabLayout.setupWithViewPager(viewPager);
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
