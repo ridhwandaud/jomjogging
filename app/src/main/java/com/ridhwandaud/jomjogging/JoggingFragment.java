@@ -155,6 +155,8 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMinZoomPreference(17.0f);
+        mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
     }
 
@@ -169,7 +171,7 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     }
 
     private void redrawLine(){
-        PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
+        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
         for (int i = 0; i < points.size(); i++) {
             LatLng point = points.get(i);
             options.add(point);
