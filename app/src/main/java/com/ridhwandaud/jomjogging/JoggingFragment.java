@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -46,10 +51,10 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     final static int PERMISSION_ALL = 1;
     final static String[] PERMISSIONS = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION};
-    MarkerOptions markerOptions;
-    Marker marker;
     LocationManager locationManager;
     private static final String TAG = "JoggingFragment";
+    private ArrayList<LatLng> points; //added
+    Polyline line; //added
 
     public JoggingFragment() {
         // Required empty public constructor
@@ -63,13 +68,12 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         View rootView = inflater.inflate(R.layout.jogging_fragment, container, false);
 
         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        markerOptions = new MarkerOptions().position(new LatLng(0, 0)).title("My Current Location");
         if (Build.VERSION.SDK_INT >= 23 && !isPermissionGranted()) {
             requestPermissions(PERMISSIONS, PERMISSION_ALL);
         } else requestLocation();
         if (!isLocationEnabled())
             showAlert(1);
-
+        points = new ArrayList<LatLng>(); //added
         initilizeMap();
 
         return rootView;
@@ -151,16 +155,26 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        marker =  mMap.addMarker(markerOptions);
         mMap.setMyLocationEnabled(true);
     }
 
     @Override
     public void onLocationChanged(Location location) {
         LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
-        marker.setPosition(myCoordinates);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+        points.add(myCoordinates); //added
+
+        redrawLine(); //added
         Log.d(TAG,myCoordinates.toString());
+    }
+
+    private void redrawLine(){
+        PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
+        for (int i = 0; i < points.size(); i++) {
+            LatLng point = points.get(i);
+            options.add(point);
+        }
+        line = mMap.addPolyline(options); //add Polyline
     }
 
     @Override
