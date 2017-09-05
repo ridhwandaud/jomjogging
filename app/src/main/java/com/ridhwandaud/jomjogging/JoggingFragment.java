@@ -175,18 +175,18 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     public void onLocationChanged(Location location) {
         LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
-        points.add(myCoordinates);
-        redrawLine();
+//        points.add(myCoordinates);
+//        redrawLine();
     }
 
-    private void redrawLine(){
-        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
-        for (int i = 0; i < points.size(); i++) {
-            LatLng point = points.get(i);
-            options.add(point);
-        }
-        line = mMap.addPolyline(options); //add Polyline
-    }
+//    private void redrawLine(){
+//        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
+//        for (int i = 0; i < points.size(); i++) {
+//            LatLng point = points.get(i);
+//            options.add(point);
+//        }
+//        line = mMap.addPolyline(options); //add Polyline
+//    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
