@@ -4,16 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/map" />
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="0.7"-->
+        <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+        <!--android:id="@+id/map" />-->
 
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        class="com.google.android.gms.maps.SupportMapFragment"/>
     <Button
+        android:id="@+id/start_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Run"/>
+        android:text="Run"
+        android:onClick="startRun"/>
 
 </LinearLayout>
