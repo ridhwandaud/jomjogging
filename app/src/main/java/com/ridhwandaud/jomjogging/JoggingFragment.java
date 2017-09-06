@@ -1,6 +1,5 @@
 package com.ridhwandaud.jomjogging;
 
-
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,27 +12,22 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -41,20 +35,19 @@ import java.util.ArrayList;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class JoggingFragment extends Fragment implements OnMapReadyCallback, LocationListener{
 
+    Polyline line;
+    private ArrayList<LatLng> points;
     private GoogleMap mMap;
+    private static final String TAG = "JoggingFragment";
+
     SupportMapFragment mSupportMapFragment;
     final static int PERMISSION_ALL = 1;
     final static String[] PERMISSIONS = {android.Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION};
     LocationManager locationManager;
-    private static final String TAG = "JoggingFragment";
-    private ArrayList<LatLng> points; //added
-    Polyline line; //added
+
 
     public JoggingFragment() {
         // Required empty public constructor
@@ -67,17 +60,26 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
 
         View rootView = inflater.inflate(R.layout.jogging_fragment, container, false);
 
+        initilizeMap();
+
         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         if (Build.VERSION.SDK_INT >= 23 && !isPermissionGranted()) {
             requestPermissions(PERMISSIONS, PERMISSION_ALL);
-        } else requestLocation();
+        }
+
         if (!isLocationEnabled())
             showAlert(1);
-        points = new ArrayList<LatLng>(); //added
-        initilizeMap();
+
+        Button startRunButton = (Button) rootView.findViewById(R.id.start_button);
+
+        startRunButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRun(v);
+            }
+        });
 
         return rootView;
-
     }
 
     private boolean isPermissionGranted() {
@@ -92,13 +94,6 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         }
     }
 
-    private void requestLocation() {
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setPowerRequirement(Criteria.POWER_HIGH);
-        String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 10000, 10, this);
-    }
     private boolean isLocationEnabled() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -142,42 +137,56 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     private void initilizeMap()
     {
         mSupportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+
         if (mSupportMapFragment == null) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             mSupportMapFragment = SupportMapFragment.newInstance();
             fragmentTransaction.replace(R.id.map, mSupportMapFragment).commit();
-
             mSupportMapFragment.getMapAsync(this);
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         mMap.setMinZoomPreference(17.0f);
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
+
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_HIGH);
+        String provider = locationManager.getBestProvider(criteria, true);
+        locationManager.requestLocationUpdates(provider, 10000, 10, this);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        // Initialize the location fields
+        if (location != null) {
+            System.out.println("Provider " + provider + " has been selected.");
+            onLocationChanged(location);
+        } else {
+            System.out.println("Location not found");
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
         LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
-        points.add(myCoordinates); //added
-
-        redrawLine(); //added
-        Log.d(TAG,myCoordinates.toString());
+//        points.add(myCoordinates);
+//        redrawLine();
     }
 
-    private void redrawLine(){
-        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
-        for (int i = 0; i < points.size(); i++) {
-            LatLng point = points.get(i);
-            options.add(point);
-        }
-        line = mMap.addPolyline(options); //add Polyline
-    }
+//    private void redrawLine(){
+//        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
+//        for (int i = 0; i < points.size(); i++) {
+//            LatLng point = points.get(i);
+//            options.add(point);
+//        }
+//        line = mMap.addPolyline(options); //add Polyline
+//    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
@@ -192,5 +201,10 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void startRun(View view){
+        Intent runIntent = new Intent(getActivity(),RunningActivity.class);
+        startActivity(runIntent);
     }
 }
