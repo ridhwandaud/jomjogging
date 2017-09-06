@@ -143,7 +143,6 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
 
         if (previousLocation != null)
         {
-
             // calculate distance
             double latitude = location.getLatitude() + previousLocation.getLatitude();
             latitude *= latitude;
@@ -153,8 +152,6 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
             altitude *= altitude;
 
             totalDistance += Math.sqrt(latitude + longitude + altitude)/1000;
-
-            //String totalRunningDistance = String.valueOf(totalDistance);
 
             distance.setText(String.format("%.2f",totalDistance));
         }

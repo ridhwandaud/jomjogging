@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "56080835416",
+    "firebase_url": "https://running-jomjogging.firebaseio.com",
+    "project_id": "running-jomjogging",
+    "storage_bucket": "running-jomjogging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56080835416:android:4a4c5a15acc114cf",
+        "android_client_info": {
+          "package_name": "com.ridhwandaud.jomjogging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56080835416-0umhsgg3l5cm4amk91me6jtd02s3409h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRhGFfoElq9GOeImJ9rjvP4JPyxPH8zms"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
