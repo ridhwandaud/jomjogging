@@ -16,10 +16,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup drawer view
         setupDrawerContent(navigationView);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -102,5 +109,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        Log.d(TAG,currentUser.getEmail());
     }
 }
