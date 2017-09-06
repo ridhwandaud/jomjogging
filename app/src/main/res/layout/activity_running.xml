@@ -6,9 +6,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_height="215dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/distance_text"
@@ -48,23 +47,23 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/running_map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <!--<FrameLayout-->
+        <!--android:id="@+id/running_map"-->
+        <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1" />-->
 
     <FrameLayout
         android:id="@+id/mapContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/end_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="End Run"
-        android:onClick="startRun"/>
+        android:text="End Run" />
 
 </LinearLayout>

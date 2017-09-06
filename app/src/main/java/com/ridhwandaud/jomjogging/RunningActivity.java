@@ -8,11 +8,8 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Chronometer;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -36,12 +34,11 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     private TextView timerValue;
     private Handler customHandler;
 
-    SupportMapFragment mapFragment;
     private GoogleMap mMap;
     LocationManager locationManager;
 
     Polyline line;
-    private ArrayList<LatLng> points;
+    private ArrayList<LatLng> points = new ArrayList<LatLng>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +48,8 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         customHandler = new Handler();
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
-        initilizeMap();
-
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        initilizeMap();
 
     }
 
@@ -79,26 +75,24 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
 
     private void initilizeMap()
     {
-        mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.running_map);
 
         FragmentManager fm = getSupportFragmentManager();
         SupportMapFragment supportMapFragment =  SupportMapFragment.newInstance();
         fm.beginTransaction().replace(R.id.mapContainer, supportMapFragment).commit();
-
-        if (supportMapFragment == null) {
-            supportMapFragment.getMapAsync(this);
-            System.out.println("initilizeMap");
-        }
+        supportMapFragment.getMapAsync(this);
+        System.out.println("initilizeMap");
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        mMap = googleMap;
-        mMap.setMinZoomPreference(17.0f);
+        mMap.setMinZoomPreference(10.0f);
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
+
+        LatLng bota = new LatLng(4.3553558,100.8603148);
+        mMap.addMarker(new MarkerOptions().position(bota).title("Marker in Bota"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(bota));
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -110,12 +104,16 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         // Initialize the location fields
         if (location != null) {
             System.out.println("Provider " + provider + " has been selected.");
-            onLocationChanged(location);
+            currentLocation(location);
         } else {
             System.out.println("Location not found");
         }
     }
 
+    public void currentLocation(Location location){
+        LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+    }
 
     @Override
     public void onLocationChanged(Location location) {

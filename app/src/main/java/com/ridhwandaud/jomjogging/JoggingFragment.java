@@ -28,8 +28,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
@@ -37,10 +35,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class JoggingFragment extends Fragment implements OnMapReadyCallback, LocationListener{
 
-    Polyline line;
-    private ArrayList<LatLng> points;
     private GoogleMap mMap;
-    private static final String TAG = "JoggingFragment";
 
     SupportMapFragment mSupportMapFragment;
     final static int PERMISSION_ALL = 1;
@@ -175,18 +170,7 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     public void onLocationChanged(Location location) {
         LatLng myCoordinates = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
-//        points.add(myCoordinates);
-//        redrawLine();
     }
-
-//    private void redrawLine(){
-//        PolylineOptions options = new PolylineOptions().width(10).color(Color.GRAY).geodesic(true);
-//        for (int i = 0; i < points.size(); i++) {
-//            LatLng point = points.get(i);
-//            options.add(point);
-//        }
-//        line = mMap.addPolyline(options); //add Polyline
-//    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
