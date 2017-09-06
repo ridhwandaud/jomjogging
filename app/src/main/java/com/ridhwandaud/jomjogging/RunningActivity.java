@@ -1,5 +1,7 @@
 package com.ridhwandaud.jomjogging;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -7,9 +9,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,6 +58,14 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initilizeMap();
 
+        Button startRunButton = (Button) findViewById(R.id.end_button);
+
+        startRunButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endRun(v);
+            }
+        });
     }
 
     private Runnable updateTimerThread = new Runnable() {
@@ -86,7 +101,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMinZoomPreference(10.0f);
+        mMap.setMinZoomPreference(17.0f);
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
 
@@ -145,5 +160,71 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void endRun(View view){
+        String message, title, btnText;
+//        customHandler.removeCallbacks(updateTimerThread);
+//        locationManager.removeUpdates(this);
+
+        title = "Do you really want to end your run?";
+        btnText = "END RUN";
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setTitle(title)
+                .setPositiveButton(btnText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        customHandler.removeCallbacks(updateTimerThread);
+                        // TODO save data and go to activity Activity
+                    }
+                })
+                .setNegativeButton("RESUME", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        dialog.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onUpEndButtonPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void onUpEndButtonPressed(){
+        String message, title, btnText;
+        title = "Athelete";
+        message = "Giving up is not an option";
+        btnText = "CANCEL RUN";
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setCancelable(false);
+        dialog.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(btnText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        customHandler.removeCallbacks(updateTimerThread);
+                        // TODO save data and go to activity Activity
+                        Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
+                        startActivity(backIntent);
+                    }
+                })
+                .setNegativeButton("RESUME", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        dialog.show();
     }
 }
