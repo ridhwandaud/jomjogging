@@ -39,10 +39,13 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     private long startTime = 0L;
 
     private TextView timerValue;
+    private TextView distance;
     private Handler customHandler;
 
     private GoogleMap mMap;
     LocationManager locationManager;
+    private Location previousLocation = null;
+    private double totalDistance = 0D;
 
     Polyline line;
     private ArrayList<LatLng> points = new ArrayList<LatLng>();
@@ -52,6 +55,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
         timerValue = (TextView) findViewById(R.id.time_text);
+        distance = (TextView) findViewById(R.id.distance_text);
         customHandler = new Handler();
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
@@ -136,6 +140,26 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
         points.add(myCoordinates);
         redrawLine();
+
+        if (previousLocation != null)
+        {
+
+            // calculate distance
+            double latitude = location.getLatitude() + previousLocation.getLatitude();
+            latitude *= latitude;
+            double longitude = location.getLongitude() + previousLocation.getLongitude();
+            longitude *= longitude;
+            double altitude = location.getAltitude() + previousLocation.getAltitude();
+            altitude *= altitude;
+
+            totalDistance += Math.sqrt(latitude + longitude + altitude)/1000;
+
+            String totalRunningDistance = String.valueOf(totalDistance);
+
+            distance.setText(totalRunningDistance);
+        }
+
+        previousLocation = location;
     }
 
     private void redrawLine(){

@@ -13,12 +13,12 @@
             android:id="@+id/distance_text"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="1.40"
+            android:text="0.00"
             android:textSize="50sp"
             android:gravity="center" />
 
         <TextView
-            android:layout_width="396dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="KILOMETERS"
             android:textSize="30sp"
