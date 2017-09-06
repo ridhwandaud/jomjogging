@@ -163,9 +163,11 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     public void endRun(View view){
-        String message, title, btnText;
-//        customHandler.removeCallbacks(updateTimerThread);
-//        locationManager.removeUpdates(this);
+
+        String title, btnText;
+
+        timeSwapBuff += timeInMilliseconds;
+        customHandler.removeCallbacks(updateTimerThread);
 
         title = "Do you really want to end your run?";
         btnText = "END RUN";
@@ -177,11 +179,16 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                     public void onClick(DialogInterface dialog, int id) {
                         customHandler.removeCallbacks(updateTimerThread);
                         // TODO save data and go to activity Activity
+                        Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
+                        startActivity(backIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton("RESUME", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
                         dialog.dismiss();
                     }
                 });
@@ -201,11 +208,19 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    public void onBackPressed() {
+        onUpEndButtonPressed();
+    }
+
     public void onUpEndButtonPressed(){
         String message, title, btnText;
         title = "Athelete";
         message = "Giving up is not an option";
         btnText = "CANCEL RUN";
+
+        timeSwapBuff += timeInMilliseconds;
+        customHandler.removeCallbacks(updateTimerThread);
+
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setCancelable(false);
         dialog.setTitle(title)
@@ -217,14 +232,20 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         // TODO save data and go to activity Activity
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton("RESUME", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
                         dialog.dismiss();
                     }
                 });
         dialog.show();
     }
+
+
+
 }
