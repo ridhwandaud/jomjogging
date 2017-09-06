@@ -154,9 +154,9 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
 
             totalDistance += Math.sqrt(latitude + longitude + altitude)/1000;
 
-            String totalRunningDistance = String.valueOf(totalDistance);
+            //String totalRunningDistance = String.valueOf(totalDistance);
 
-            distance.setText(totalRunningDistance);
+            distance.setText(String.format("%.2f",totalDistance));
         }
 
         previousLocation = location;
