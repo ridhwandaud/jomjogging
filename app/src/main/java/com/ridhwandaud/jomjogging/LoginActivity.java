@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        login();
+        login(currentUser);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class LoginActivity extends BaseActivity implements
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
-                        login();
+                        login(user);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -113,9 +113,11 @@ public class LoginActivity extends BaseActivity implements
         return valid;
     }
 
-    public void login(){
-        Intent loginIntent = new Intent(this,MainActivity.class);
-        startActivity(loginIntent);
-        finish();
+    public void login(FirebaseUser user){
+        if (user != null) {
+            Intent loginIntent = new Intent(this, MainActivity.class);
+            startActivity(loginIntent);
+            finish();
+        }
     }
 }

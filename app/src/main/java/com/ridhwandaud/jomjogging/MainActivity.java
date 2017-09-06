@@ -79,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_setting:
                 fragmentClass = SettingFragment.class;
                 break;
+            case R.id.nav_logout:
+                //TODO change to profile or in setting
+                fragmentClass = null;
+                mAuth.signOut();
+                this.finishAffinity();
+                break;
             default:
                 fragmentClass = JoggingFragment.class;
         }
