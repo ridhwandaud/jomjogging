@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AccountFragment extends Fragment {
 
+    private static final String TAG = "AccountFragment";
+    private DatabaseReference mDatabase;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -28,4 +32,10 @@ public class AccountFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
 }

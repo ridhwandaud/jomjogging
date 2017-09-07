@@ -16,14 +16,14 @@ public class Run {
     public String uid;
     public double distance;
     public long time;
-    public Date date;
+    public long date;
     private ArrayList<LatLng> points = new ArrayList<LatLng>();
 
     public Run() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Run(String uid, double distance, long time, Date date) {
+    public Run(String uid, double distance, long time, long date) {
         this.uid = uid;
         this.distance = distance;
         this.time = time;

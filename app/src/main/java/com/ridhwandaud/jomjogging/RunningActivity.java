@@ -66,7 +66,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     FirebaseDatabase database;
     DatabaseReference myRef;
     private FirebaseAuth mAuth;
-    Date today;
+    Long today;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initilizeMap();
 
-        today = new Date();
+        today = System.currentTimeMillis()/1000;
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -295,7 +295,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         dialog.show();
     }
 
-    private void saveRun(FirebaseUser user, double totalDistance,long updatedTime, Date today){
+    private void saveRun(FirebaseUser user, double totalDistance,long updatedTime, long today){
 
         String key = myRef.child("running").push().getKey();
         String uid = user.getUid();
