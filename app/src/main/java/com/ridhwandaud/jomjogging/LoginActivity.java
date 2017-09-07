@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends BaseActivity implements
         View.OnClickListener{
 
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "LoginActivity";
 
     private EditText mEmailField;
     private EditText mPasswordField;

@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,12 +28,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 
 public class RunningActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
-
+    private static final String TAG = "RunningActivity";
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
@@ -50,6 +58,11 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     Polyline line;
     private ArrayList<LatLng> points = new ArrayList<LatLng>();
 
+    //Firebase
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +74,10 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         customHandler.postDelayed(updateTimerThread, 0);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initilizeMap();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        myRef = FirebaseDatabase.getInstance().getReference();
 
         Button startRunButton = (Button) findViewById(R.id.end_button);
 
@@ -200,6 +217,9 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                     public void onClick(DialogInterface dialog, int id) {
                         customHandler.removeCallbacks(updateTimerThread);
                         // TODO save data and go to activity Activity
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        String key = myRef.child("posts").push().getKey();
+                        myRef.child("users").child(currentUser.getUid()).child("distance").setValue(String.format("%.2f",totalDistance));
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
                         finish();
