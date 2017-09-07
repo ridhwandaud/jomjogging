@@ -35,8 +35,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ridhwandaud.jomjogging.models.Run;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RunningActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
@@ -62,6 +66,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     FirebaseDatabase database;
     DatabaseReference myRef;
     private FirebaseAuth mAuth;
+    Date today;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,8 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         customHandler.postDelayed(updateTimerThread, 0);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initilizeMap();
+
+        today = new Date();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -219,7 +226,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         // TODO save data and go to activity Activity
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                        saveRun(currentUser,totalDistance);
+                        saveRun(currentUser,totalDistance,updatedTime,today);
 
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
@@ -288,10 +295,19 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         dialog.show();
     }
 
-    private void saveRun(FirebaseUser user, double totalDistance){
+    private void saveRun(FirebaseUser user, double totalDistance,long updatedTime, Date today){
 
         String key = myRef.child("running").push().getKey();
-        myRef.child("users").child(user.getUid()).child("running").setValue(String.format("%.2f",totalDistance));
+        String uid = user.getUid();
+        Run run = new Run(uid,totalDistance,updatedTime,today);
+        Map<String, Object> runValues = run.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+
+        childUpdates.put("/runs/" + key, runValues);
+        childUpdates.put("/users/" + uid + "/" + key, runValues);
+
+        myRef.updateChildren(childUpdates);
+
     }
 
 }

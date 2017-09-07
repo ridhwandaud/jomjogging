@@ -48,7 +48,7 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         // Required empty public constructor
     }
 
-
+    //TODO change to listing tab layout
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -190,5 +190,6 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
     public void startRun(View view){
         Intent runIntent = new Intent(getActivity(),RunningActivity.class);
         startActivity(runIntent);
+        getActivity().finish();
     }
 }
