@@ -218,8 +218,9 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         customHandler.removeCallbacks(updateTimerThread);
                         // TODO save data and go to activity Activity
                         FirebaseUser currentUser = mAuth.getCurrentUser();
-                        String key = myRef.child("posts").push().getKey();
-                        myRef.child("users").child(currentUser.getUid()).child("distance").setValue(String.format("%.2f",totalDistance));
+
+                        saveRun(currentUser,totalDistance);
+
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
                         finish();
@@ -287,6 +288,10 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         dialog.show();
     }
 
+    private void saveRun(FirebaseUser user, double totalDistance){
 
+        String key = myRef.child("running").push().getKey();
+        myRef.child("users").child(user.getUid()).child("running").setValue(String.format("%.2f",totalDistance));
+    }
 
 }
