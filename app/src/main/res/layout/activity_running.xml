@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="215dp"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <TextView
@@ -14,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="0.00"
+            android:textColor="#fff"
             android:textSize="50sp"
             android:gravity="center" />
 
@@ -22,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="KILOMETERS"
             android:textSize="30sp"
+            android:textColor="#fff"
             android:gravity="center"/>
 
         <LinearLayout
@@ -29,34 +32,39 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="20dp">
-            <TextView
-                android:id="@+id/speed_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="16:12"
-                android:gravity="center"/>
+            <!--<TextView-->
+                <!--android:id="@+id/speed_text"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="16:12"-->
+                <!--android:textColor="#fff"-->
+                <!--android:gravity="center"/>-->
             <TextView
                 android:id="@+id/time_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="11:27"
+                android:textSize="20sp"
+                android:textColor="#fff"
                 android:gravity="center"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/mapContainer"
+        android:id="@+id/git sta"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/end_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
         android:text="End Run" />
 
 </LinearLayout>

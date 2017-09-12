@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textSize="16sp"
                 tools:text="4 September" />
 
@@ -38,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:textColor="#000"
+                    android:textColor="#fff"
                     tools:text="7.00 KM" />
 
                 <TextView
@@ -46,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="#000"
+                    android:textColor="#fff"
                     android:textStyle="bold"
                     tools:text="16:03"
                     android:layout_alignParentRight="true"/>

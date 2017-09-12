@@ -80,7 +80,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         initilizeMap();
 
-        today = System.currentTimeMillis()/1000;
+        today = System.currentTimeMillis();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -133,15 +133,11 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
 
-        LatLng bota = new LatLng(4.3553558,100.8603148);
-        mMap.addMarker(new MarkerOptions().position(bota).title("Marker in Bota"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(bota));
-
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setPowerRequirement(Criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 10000, 10, this);
+        locationManager.requestLocationUpdates(provider, 1000, 10, this);
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
@@ -304,7 +300,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         Map<String, Object> childUpdates = new HashMap<>();
 
         childUpdates.put("/runs/" + key, runValues);
-        childUpdates.put("/users/" + uid + "/" + key, runValues);
+        childUpdates.put("/user-runs/" + uid + "/" + key, runValues);
 
         myRef.updateChildren(childUpdates);
 

@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -154,15 +155,17 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setPowerRequirement(Criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 10000, 10, this);
+        locationManager.requestLocationUpdates(provider, 1000, 10, this);
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
         if (location != null) {
             System.out.println("Provider " + provider + " has been selected.");
+            Toast.makeText(getActivity(),"Last location found",Toast.LENGTH_SHORT).show();
             onLocationChanged(location);
         } else {
             System.out.println("Location not found");
+            Toast.makeText(getActivity(),"Last location not found",Toast.LENGTH_SHORT).show();
         }
     }
 
