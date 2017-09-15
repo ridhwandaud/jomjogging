@@ -132,6 +132,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         mMap.setMinZoomPreference(17.0f);
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);

@@ -150,6 +150,7 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         mMap.setMinZoomPreference(17.0f);
         mMap.setMaxZoomPreference(20.0f);
         mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
