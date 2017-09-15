@@ -3,9 +3,9 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/bg"
     android:orientation="vertical"
-    android:paddingTop="16dp"
+    android:paddingTop="250dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:weightSum="4">
@@ -15,12 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_email"
+        android:textColor="#fff"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/field_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
         android:hint="@string/hint_password"
         android:inputType="textPassword" />
 

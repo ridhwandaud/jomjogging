@@ -9,10 +9,6 @@ import com.ridhwandaud.jomjogging.models.Run;
 
 import java.util.Date;
 
-/**
- * Created by ridhwan on 10/09/2017.
- */
-
 public class RunViewHolder extends RecyclerView.ViewHolder{
 
     public TextView dateView;
