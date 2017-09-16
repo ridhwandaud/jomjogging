@@ -229,7 +229,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         // TODO save data and go to activity Activity
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                        //saveRun(currentUser,totalDistance,updatedTime,today);
+                        saveRun(currentUser,results,updatedTime,today);
 
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
