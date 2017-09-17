@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ridhwandaud.jomjogging.models.Run;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -228,7 +229,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         customHandler.removeCallbacks(updateTimerThread);
                         // TODO save data and go to activity Activity
                         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+                        results = round(results,2);
                         saveRun(currentUser,results,updatedTime,today);
 
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
@@ -246,6 +247,11 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                 });
         dialog.show();
     }
+
+    public static float round(float d, int decimalPlace) {
+        return BigDecimal.valueOf(d).setScale(decimalPlace,BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

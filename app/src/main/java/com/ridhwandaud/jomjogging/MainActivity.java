@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FirebaseAuth mAuth;
+    TextView name;
+    TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,20 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        View header=navigationView.getHeaderView(0);
+
         // Setup drawer view
         setupDrawerContent(navigationView);
 
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        name = (TextView)header.findViewById(R.id.user_name);
+        email = (TextView)header.findViewById(R.id.user_email);
+        name.setText(currentUser.getDisplayName());
+        email.setText(currentUser.getEmail());
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
