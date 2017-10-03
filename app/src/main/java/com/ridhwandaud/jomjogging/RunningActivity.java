@@ -249,9 +249,10 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     public static float round(float d, int decimalPlace) {
-        return BigDecimal.valueOf(d).setScale(decimalPlace,BigDecimal.ROUND_HALF_UP).floatValue();
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
