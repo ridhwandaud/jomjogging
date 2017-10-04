@@ -57,7 +57,8 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
     private GoogleMap mMap;
     LocationManager locationManager;
     private Location previousLocation = null;
-    private double totalDistance = 0D;
+    private float[] totalDistance = new float[1];
+    private float results;
 
     Polyline line;
     private ArrayList<LatLng> points = new ArrayList<LatLng>();
@@ -138,7 +139,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setPowerRequirement(Criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 1000, 10, this);
+        locationManager.requestLocationUpdates(provider, 0, 0, this);
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
@@ -164,17 +165,22 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
 
         if (previousLocation != null)
         {
-            // calculate distance
-            double latitude = location.getLatitude() + previousLocation.getLatitude();
-            latitude *= latitude;
-            double longitude = location.getLongitude() + previousLocation.getLongitude();
-            longitude *= longitude;
-            double altitude = location.getAltitude() + previousLocation.getAltitude();
-            altitude *= altitude;
+//            // calculate distance
+//            double latitude = location.getLatitude() + previousLocation.getLatitude();
+//            latitude *= latitude;
+//            double longitude = location.getLongitude() + previousLocation.getLongitude();
+//            longitude *= longitude;
+//            double altitude = location.getAltitude() + previousLocation.getAltitude();
+//            altitude *= altitude;
+//
+//            totalDistance += Math.sqrt(latitude + longitude + altitude)/1000;
 
-            totalDistance += Math.sqrt(latitude + longitude + altitude)/1000;
 
-            distance.setText(String.format("%.2f",totalDistance));
+            Location.distanceBetween(previousLocation.getLatitude(),previousLocation.getLongitude(),location.getLatitude(),location.getLongitude(),totalDistance);
+            results += (totalDistance[0] / 1000);
+            distance.setText(String.format("%.2f",results));
+
+           // System.out.println("Distance.", totalDistance[1]);
         }
 
         previousLocation = location;
@@ -223,7 +229,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
                         // TODO save data and go to activity Activity
                         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-                        saveRun(currentUser,totalDistance,updatedTime,today);
+                        saveRun(currentUser,results,updatedTime,today);
 
                         Intent backIntent = new Intent(RunningActivity.this,MainActivity.class);
                         startActivity(backIntent);
@@ -292,7 +298,7 @@ public class RunningActivity extends AppCompatActivity implements OnMapReadyCall
         dialog.show();
     }
 
-    private void saveRun(FirebaseUser user, double totalDistance,long updatedTime, long today){
+    private void saveRun(FirebaseUser user, float totalDistance,long updatedTime, long today){
 
         String key = myRef.child("running").push().getKey();
         String uid = user.getUid();

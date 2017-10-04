@@ -156,7 +156,7 @@ public class JoggingFragment extends Fragment implements OnMapReadyCallback, Loc
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setPowerRequirement(Criteria.POWER_HIGH);
         String provider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(provider, 1000, 10, this);
+        locationManager.requestLocationUpdates(provider, 10000, 10, this);
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
