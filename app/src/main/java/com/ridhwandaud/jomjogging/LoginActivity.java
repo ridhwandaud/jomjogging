@@ -46,14 +46,14 @@ public class LoginActivity extends BaseActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        login(currentUser);
+        //login(currentUser);
     }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.facebook_sign_in_button) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            signInWithFacebook();
         } else if (i == R.id.email_sign_in_button) {
             signInWithEmail();
         }
@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity implements
     private void signInWithEmail(){
         Intent loginEmailIntent = new Intent(this, LoginEmailActivity.class);
         startActivity(loginEmailIntent);
-        finish();
+        //finish();
     }
 
 
@@ -96,30 +96,8 @@ public class LoginActivity extends BaseActivity implements
         }
     }
 
-    private void createAccount(String email, String password){
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            login(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        hideProgressDialog();
-                    }
-                });
+    private void signInWithFacebook(){
+        Toast.makeText(LoginActivity.this, "Sign with facebook",
+                Toast.LENGTH_SHORT).show();
     }
 }
